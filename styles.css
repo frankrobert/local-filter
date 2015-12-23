@@ -1,0 +1,72 @@
+body,
+html,
+.container
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.container
+{
+    align-items: stretch;
+}
+#map
+{
+    height: 100%;
+}
+.filter-bar
+{
+    display: inline-block;
+    float: left;
+
+    width: 25%;
+    height: 100%;
+
+    border-width: 0 3px 0 0;
+    border-style: solid;
+    border-color: white;
+    background-color: #021f32;
+}
+.nav-bar
+{
+    display: block;
+
+    border-width: 0 0 3px 0;
+    border-style: solid;
+    border-color: white;
+    background-color: #021f32;
+}
+.salesman
+{
+    font-family: 'Montserrat';
+    font-size: 20px;
+    font-weight: bold;
+
+    margin-left: auto;
+
+    color: white;
+}
+input
+{
+    margin: 5px 1px 3px 0;
+    padding: 3px 0 3px 3px;
+
+    transition: all .30s ease-in-out;
+
+    border: 1px solid #ddd;
+    outline: none;
+}
+input:focus, input:hover
+{
+    margin: 5px 1px 3px 0;
+    padding: 3px 0 3px 3px;
+
+    border: 1px solid rgba(81, 203, 238, 1);
+    box-shadow: 0 0 7px rgba(81, 203, 238, 1);
+}
+input,
+select,
+textarea
+{
+    color: #f00;
+}

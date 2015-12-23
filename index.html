@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Travelling Salesman Map</title>
+		<meta name="viewport" content="initial-scale=1.0">
+		<meta charset="utf-8">
+		<link href="styles.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<div class="container">
+			<div class="filter-bar">
+				<div class="nav-bar">
+					<span class="salesman">STM Metro System</span>
+					<br>
+					<span>
+						<form>
+							<input id="location-content" placeholder="Type in a location" autofocus>
+						<button type="submit" class="filter-btn">Filter</button>
+						</form>
+					</span>
+				</div>
+				<ul data-bind="foreach: stationList" class="locations">
+					<li data-bind="text: name">
+					</li>
+				</ul>
+			</div>
+			<div id="map"></div>
+		</div>
+		<script src="knockout.js"></script>
+		<script src="app.js"></script>
+		<script src="map.js"></script>
+		<script src="mapstyle.js"></script>
+		<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjjXXr2R7GjWAsmbalUcvwd5I0tqLNuig&libraries=places&callback=initMap">
+		</script>
+	</body>
+</html>
