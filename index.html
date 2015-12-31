@@ -16,13 +16,16 @@
 					<span>
 						<form>
 							<input id="location-content" placeholder="Type in a location" autofocus>
-						<button type="submit" class="filter-btn">Filter</button>
+							<button type="submit" class="filter-btn">Filter</button>
 						</form>
 					</span>
 				</div>
 				<ul data-bind="foreach: stationList" class="locations">
-					<li data-bind="text: name">
-					</li>
+					<ul class="green">
+						<li data-bind="text: name">
+						</li>
+					</ul>
+					
 				</ul>
 			</div>
 			<div id="map"></div>

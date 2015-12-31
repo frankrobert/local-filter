@@ -13,26 +13,51 @@ var appModel = {
 		// jolicoeur
 		{
 			placeId: 'ChIJlfO3rvUQyUwRELV-FnFwuB4'
+		},
+		// verdun
+		{
+			placeId: 'ChIJpxXXt2AQyUwR7IuapljK3-E'
+		},
+		// de l'eglise
+		{
+			placeId: 'ChIJ85ZBm2YQyUwRbpt3EAwTR2M'
+		},
+		// lasalle
+		{
+			placeId: 'ChIJgwYTPnwQyUwRMWNIlONF49A'
+		},
+		// charlevoix
+		{
+			placeId: 'ChIJifVaon8ayUwRkywkhR1agC0'
+		},
+		// lionel-groulx
+		{
+			placeId: 'ChIJ8xdUMHcayUwR6M1HNDWRY5g'
 		}
 	]
 };
 
+var testPlace = [];
+
 var geoResultAddress = [];
 
 var ViewModel = function() {
+	var self = this;
 
-	this.stationList = ko.observable(geoResultAddress);
-	this.stationList2 = ko.observableArray([]);
-	geoResultAddress.forEach(function(station){
-		stationList2.push(geoResultAddress[station]);
+	var Place = function(data) {
+		this.name = data.name;
+		this.location = data.location;
+	};
+
+
+	self.stationList = ko.observableArray([]);
+	geoResultAddress.forEach(function(placeitem) {
+		self.stationList.push(new Place(placeitem));
 	});
 
-	this.userLocations = ko.observable(appModel.locationModel);
-	this.currentStation = ko.observable(this.stationList()[0]);
 
-	console.log('this.currentStation: ' + this.currentStation());
-	console.log('this.stationList: ' + this.stationList());
-	console.log('geoResultAddress: ' + geoResultAddress);
-	console.log('this.stationList2: ' + this.stationList2());
+
 };
-ko.applyBindings(new ViewModel());
+window.onload = function() {
+	ko.applyBindings(new ViewModel());
+};

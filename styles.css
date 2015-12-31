@@ -26,15 +26,23 @@ html,
     border-style: solid;
     border-color: white;
     background-color: #021f32;
+
+    overflow: auto;
 }
 .nav-bar
 {
     display: block;
+    position: fixed;
+    width: 100%;
 
     border-width: 0 0 3px 0;
     border-style: solid;
     border-color: white;
     background-color: #021f32;
+}
+li
+{
+    color: white;
 }
 .salesman
 {
@@ -56,7 +64,8 @@ input
     border: 1px solid #ddd;
     outline: none;
 }
-input:focus, input:hover
+input:focus,
+input:hover
 {
     margin: 5px 1px 3px 0;
     padding: 3px 0 3px 3px;
@@ -69,4 +78,8 @@ select,
 textarea
 {
     color: #f00;
+}
+.green
+{
+    background-color: green;
 }
