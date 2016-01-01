@@ -31,14 +31,12 @@ html,
 }
 .nav-bar
 {
-    display: block;
-    position: fixed;
-    width: 100%;
-
+	position: fixed;
     border-width: 0 0 3px 0;
     border-style: solid;
     border-color: white;
     background-color: #021f32;
+    z-index: 1;
 }
 li
 {
@@ -81,5 +79,11 @@ textarea
 }
 .green
 {
+	list-style-type: none;
     background-color: green;
+}
+.locations{
+	top: 60px;
+	position: relative;
+	display: block;
 }
