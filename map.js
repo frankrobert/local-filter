@@ -26,9 +26,9 @@ var initMap = function() {
 	//	});
 
 	// event listener to close any open infowindows on map click
-	map.addListener('click', function(event) {
-		infoWindow.close();
-	});
+		map.addListener('click', function(event) {
+			infoWindow.close();
+		});
 
 	// Adds a marker at the center of the map.
 
@@ -42,13 +42,17 @@ var initMap = function() {
 			addMarker(appModel.locationModel[i]);
 		}
 	*/
+	// The idle event is a debounced event, so we can query & listen without
+	// throwing too many requests at the server.
+	//  map.addListener('idle', performSearch);
 
 	var request = {
 		location: mapCenter,
-		radius: '10000',
-		types: ['subway_station'],
+		radius: '20000',
 		keyword: 'station',
+		types: ['subway_station']
 	};
+
 
 	// infowindow for markers
 	infoWindow = new google.maps.InfoWindow();
@@ -62,20 +66,24 @@ var initMap = function() {
 		}
 
 	*/
-
-	//radar search
-	service.radarSearch(request, callback);
-
+	//nearby search
+	service.nearbySearch(request, callback);
 };
 
-function callback(results, status) {
+function callback(results, status, pagination) {
 	if (status !== google.maps.places.PlacesServiceStatus.OK) {
 		console.error(status);
 		return;
 	}
 	for (var i = 0, result; result = results[i]; i++) {
-		addMarker(result);
-		geoResultAddress.push(result);
+		if (result.name.toLowerCase().indexOf('station') === 0) {
+			addMarker(result);
+			geoResultAddress.push(result);
+		}
+	}
+	if (pagination.hasNextPage) {
+		sleep: 2;
+		pagination.nextPage();
 	}
 }
 
@@ -90,15 +98,15 @@ function addMarker(place) {
 			scaledSize: new google.maps.Size(15, 22)
 		}
 	});
-
-	service.getDetails(place, function(result, status) {
-		if (status !== google.maps.places.PlacesServiceStatus.OK) {
-			console.error(status);
-			return;
-		}
-		geoResultAddress.push(result);
-	});
-
+	/*
+		service.getDetails(place, function(result, status) {
+			if (status !== google.maps.places.PlacesServiceStatus.OK) {
+				console.error(status);
+				return;
+			}
+	//		geoResultAddress.push(result);
+		});
+	*/
 	google.maps.event.addListener(marker, 'click', function() {
 		service.getDetails(place, function(result, status) {
 			if (status !== google.maps.places.PlacesServiceStatus.OK) {

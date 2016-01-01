@@ -46,7 +46,7 @@ var ViewModel = function() {
 
 	var Place = function(data) {
 		this.name = data.name;
-		this.location = data.location;
+		this.viscinity = data.viscinity;
 	};
 
 
