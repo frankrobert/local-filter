@@ -70,31 +70,41 @@ var initMap = function() {
 	service.nearbySearch(request, callback);
 };
 
-function callback(results, status, pagination) {
-	if (status !== google.maps.places.PlacesServiceStatus.OK) {
-		console.error(status);
-		return;
-	}
-	if (pagination.hasNextPage) {
+//async.series([
+//callback returning the values of the nearbySearch
+	function callback(results, status, pagination) {
+		if (status !== google.maps.places.PlacesServiceStatus.OK) {
+			console.error(status);
+			return;
+		}
 
-		for (var i = 0, result; result = results[i]; i++) {
-			if (result.name.toLowerCase().indexOf('station') === 0) {
-				addMarker(result);
-				geoResultAddress.push(result);
+		//check if there's another page
+		if (pagination.hasNextPage) {
+
+			for (var i = 0, result; result = results[i]; i++) {
+				// if the word 'station' is included for more precise results.
+				if (result.name.toLowerCase().indexOf('station') === 0) {
+					addMarker(result);
+					geoResultAddress.push(result);
+				}
+			}
+			sleep: 2;
+			pagination.nextPage();
+		}
+		// && typeof geoResultAddress[result] === -1 not working to confirm if there are duplicates??
+		// not sure how this works, but adds even more precise results
+		// under the impression it's checking for the last hasNextPage() == null or something
+		if (pagination.b == null) {
+			for (var i = 0, result; result = results[i]; i++) {
+				if (result.name.toLowerCase().indexOf('station') === 0) {
+					addMarker(result);
+					geoResultAddress.push(result);
+				}
 			}
 		}
-		sleep: 2;
-		pagination.nextPage();
 	}
-	if (pagination.b == null) {
-		for (var i = 0, result; result = results[i]; i++) {
-			if (result.name.toLowerCase().indexOf('station') === 0) {
-				addMarker(result);
-				geoResultAddress.push(result);
-			}
-		}
-	}
-}
+//	ViewModel.stationPush()
+//]);
 
 function addMarker(place) {
 	var delay = 1000;
@@ -130,6 +140,8 @@ function addMarker(place) {
 		});
 	}, delay);
 }
+
+
 
 // LOOP STYLE CALLBACK - reuse if thought to be needed.
 // might be better than radar callback already being implemented.

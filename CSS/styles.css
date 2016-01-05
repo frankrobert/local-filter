@@ -52,6 +52,8 @@ li
 
     color: white;
 }
+
+/*
 input
 {
     margin: 5px 1px 3px 0;
@@ -77,12 +79,16 @@ textarea
 {
     color: #f00;
 }
+*/
+
 .green
 {
-	list-style-type: none;
     background-color: green;
 }
-.locations{
+#locations{
+
+	list-style-type: none;	
+    font-family: 'Montserrat';
 	top: 60px;
 	position: relative;
 	display: block;
