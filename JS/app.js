@@ -75,21 +75,23 @@ var ViewModel = function() {
 		this.viscinity = data.viscinity;
 	};
 
-	self.stationList = ko.observableArray([]);
-	
-	self.stationPush = function() {
+	self.stationList = ko.observableArray([]).extend({
+		notify: 'always'
+	});
+
+//	self.stationPush = function() {
 		geoResultAddress.forEach(function(placeitem) {
 			self.stationList.push(new Place(placeitem));
 		});
-	};
-
+//	};
+/*
 	self.stationList.extend({
 		notify: 'always'
 	});
 	self.stationList.extend({
 		rateLimit: 100
 	});
-
+*/
 	/*
 	var input = document.getElementById('myInput');
 		new Awesomplete(input, {
