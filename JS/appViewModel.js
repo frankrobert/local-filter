@@ -2,7 +2,7 @@
 var stationView;
 
 define(['knockout'], function(ko) {
-    return function ViewModel() {
+    return function appViewModel() {
 
 	var self = this;
 
@@ -55,4 +55,4 @@ var ViewModel = function() {
 // ko.applyBindings(new ViewModel());
 
 // in your onload function
-stationView = new ViewModel();
+stationView = new appViewModel();
