@@ -1,3 +1,4 @@
+
 var map;
 var geocoder;
 var infowindow;
@@ -77,18 +78,18 @@ var initMap = function() {
 			console.error(status);
 			return;
 		}
-
 			results.forEach(function(result){
 				// if the word 'station' is included for more precise results.
 				if (result.name.toLowerCase().indexOf('station') === 0) {
 					addMarker(result);
-					geoResultAddress.push(result);
+					stationView.stationList.push(result);
 				}
 			});
 		//check if there's another page
 		if (pagination.hasNextPage) {
 		setTimeout(pagination.nextPage.bind(pagination), 2000);
 		}
+
 	}
 //	ViewModel.stationPush()
 //]);

@@ -387,5 +387,5 @@
 // Test copy from awesomplete site
 var input = document.getElementById("myinput");
 new Awesomplete(input, {
-	list: document.getElementById("locations")
+	list: ['test', 'fat']
 });
