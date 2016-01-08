@@ -83,6 +83,7 @@ var initMap = function() {
 				if (result.name.toLowerCase().indexOf('station') === 0) {
 					addMarker(result);
 					stationView.stationList.push(result);
+					stationArray.push(result.name);
 				}
 			});
 		//check if there's another page

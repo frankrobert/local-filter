@@ -5,9 +5,9 @@
 		<meta name="viewport" content="initial-scale=1.0">
 		<meta charset="utf-8">
 		<link href="CSS/styles.css" rel="stylesheet">
+		<link href="CSS/typeahead.css" rel="stylesheet">
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-		<link href="CSS/awesomplete.css" rel="stylesheet">
-		</head>
+	</head>
 	<body>
 		<div class="container">
 			<div class="filter-bar">
@@ -16,7 +16,7 @@
 					<br>
 					<span>
 						<form>
-							<input id="myinput" placeholder="Type in a location" autofocus>
+							<input class="typeahead form-control" type="text" placeholder="Type in a Station Name" autofocus>
 							<button type="submit" class="filter-btn">Filter</button>
 						</form>
 					</span>
@@ -29,10 +29,12 @@
 			<div id="map"></div>
 		</div>
 		<script src="JS/knockout.js"></script>
+		<script src="bower_components/jquery-2.1.4.min/index.js"></script>
+		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="JS/typeahead.bundle.js"></script>
 		<script src="JS/app.js"></script>
 		<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCjjXXr2R7GjWAsmbalUcvwd5I0tqLNuig&libraries=places&callback=initMap'></script>
-				<script src="JS/map.js"></script>
+		<script src="JS/map.js"></script>
 		<script src="JS/mapstyle.js"></script>
-		<script src="JS/awesomplete.js"></script>
-		</body>
+	</body>
 </html>
