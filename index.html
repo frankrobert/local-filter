@@ -16,13 +16,19 @@
 					<br>
 					<span>
 						<form>
+							<!--
 							<input class="typeahead form-control" type="text" placeholder="Type in a Station Name" autofocus>
+							-->
+							<input type="text" class="form-control" placeholder="Find your station..." data-bind="textInput: stationView.filterText" autofocus>
+							
+							<!--
 							<button type="submit" class="filter-btn">Filter</button>
+							-->
 						</form>
 					</span>
 				</div>
-				<ul id="locations" data-bind="foreach: stationList">
-					<li data-bind="text: name">
+				<ul id="locations" data-bind="foreach: filteredItems">
+					<li data-bind="text: name, click: setStation, visible: $parent.isVisible">
 					</li>
 				</ul>
 			</div>
@@ -31,7 +37,6 @@
 		<script src="JS/knockout.js"></script>
 		<script src="bower_components/jquery-2.1.4.min/index.js"></script>
 		<script src="bower_components/jquery/dist/jquery.js"></script>
-		<script src="JS/typeahead.bundle.js"></script>
 		<script src="JS/app.js"></script>
 		<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCjjXXr2R7GjWAsmbalUcvwd5I0tqLNuig&libraries=places&callback=initMap'></script>
 		<script src="JS/map.js"></script>

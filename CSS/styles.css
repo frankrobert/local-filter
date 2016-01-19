@@ -37,10 +37,18 @@ html,
     border-color: white;
     background-color: #021f32;
     z-index: 1;
+    width: auto;
+    display: block;
 }
 li
 {
+
+    transition: all .20s ease-in-out;
     color: white;
+}
+li:hover
+{
+    color: red;
 }
 .salesman
 {

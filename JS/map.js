@@ -1,4 +1,3 @@
-
 var map;
 var geocoder;
 var infowindow;
@@ -73,61 +72,56 @@ var initMap = function() {
 
 //async.series([
 //callback returning the values of the nearbySearch
-	function callback(results, status, pagination) {
-		if (status !== google.maps.places.PlacesServiceStatus.OK) {
-			console.error(status);
-			return;
-		}
-			results.forEach(function(result){
-				// if the word 'station' is included for more precise results.
-				if (result.name.toLowerCase().indexOf('station') === 0) {
-					addMarker(result);
-					stationView.stationList.push(result);
-					stationArray.push(result.name);
-				}
-			});
-		//check if there's another page
-		if (pagination.hasNextPage) {
-		setTimeout(pagination.nextPage.bind(pagination), 2000);
-		}
-
+function callback(results, status, pagination) {
+	if (status !== google.maps.places.PlacesServiceStatus.OK) {
+		console.error(status);
+		return;
 	}
+	results.forEach(function(result) {
+		// if the word 'station' is included for more precise results.
+		if (result.name.toLowerCase().indexOf('station') === 0) {
+			var marker = addMarker(result);
+			result.marker = addMarker(result);
+			stationView.stationList.push(result);
+			stationArray.push(result.name);
+		}
+	});
+	//check if there's another page
+	if (pagination.hasNextPage) {
+		setTimeout(pagination.nextPage.bind(pagination), 2000);
+	}
+
+}
 //	ViewModel.stationPush()
 //]);
 
 function addMarker(place) {
-	var delay = 1000;
-	setTimeout(function() {
-		var marker = new google.maps.Marker({
-			map: map,
-			position: place.geometry.location,
-			animation: google.maps.Animation.DROP,
-			icon: {
-				url: 'underground.png',
-				anchor: new google.maps.Point(10, 10),
-				scaledSize: new google.maps.Size(15, 22)
+	var marker = new google.maps.Marker({
+		map: map,
+		position: place.geometry.location,
+		animation: google.maps.Animation.DROP,
+		icon: {
+			url: 'underground.png',
+			anchor: new google.maps.Point(10, 10),
+			scaledSize: new google.maps.Size(15, 22)
+		}
+	});
+
+	google.maps.event.addListener(marker, 'click', function() {
+		service.getDetails(place, function(result, status) {
+			if (status !== google.maps.places.PlacesServiceStatus.OK) {
+				console.error(status);
+				return;
 			}
+			infoWindow.setContent(result.name, result.viscinity);
+			//  "https://farm" + {farm-id} + ".staticflickr.com/" + {server-id} + "/" + {id} + "_" + {secret} + "_m.jpg"
+			infoWindow.open(map, marker);
+			console.log("Position: " + marker.getPosition());
+			//			marker.setVisible(false);									// use this method to make them disappear during filter ONCE you have the click binding working.
 		});
-		/*
-			service.getDetails(place, function(result, status) {
-				if (status !== google.maps.places.PlacesServiceStatus.OK) {
-					console.error(status);
-					return;
-				}
-		//		geoResultAddress.push(result);
-			});
-		*/
-		google.maps.event.addListener(marker, 'click', function() {
-			service.getDetails(place, function(result, status) {
-				if (status !== google.maps.places.PlacesServiceStatus.OK) {
-					console.error(status);
-					return;
-				}
-				infoWindow.setContent(result.name, result.location);
-				infoWindow.open(map, marker);
-			});
-		});
-	}, delay);
+	});
+	return marker;
+	//markerTest.push(marker);
 }
 
 
