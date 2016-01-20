@@ -11,16 +11,23 @@ var ViewModel = function() {
 	this.filteredItems = ko.computed(function() {
 		var filter = self.filterText().toLowerCase();
 		if (!filter) {
+			// if there's no filter text, set all markers and list items to visible
+			self.stationList().forEach(function(station) {
+			station.isVisible(true);
+			station.marker.setVisible(true);
+		});
 			return self.stationList();
 		} else {
 //			return ko.utils.arrayFilter(self.stationList(), function(station) {
 			self.stationList().forEach(function(station) {
 				var st = station.name.toLowerCase();
 				if (st.search(filter) >= 0) {
+					// if there's a match, set the matches to visible
 					station.isVisible(true);
 					station.marker.setVisible(true);
 				} 
 				else{
+					// set the non-matching results to invisible
 					station.isVisible(false);
 					station.marker.setVisible(false);
 				}
@@ -28,6 +35,7 @@ var ViewModel = function() {
 		}
 	}, ViewModel);
 
+	// use this...?
 	this.setStation = function(clickedStation) {
 		self.currentStation(clickedStation);
 	};
