@@ -28,7 +28,7 @@
 					</span>
 				</div>
 				<ul id="locations" data-bind="foreach: filteredItems">
-					<li data-bind="text: name, click: setStation, visible: $parent.isVisible">
+					<li data-bind="text: name, click: setStation"><!-- , visible: isVisible -->
 					</li>
 				</ul>
 			</div>

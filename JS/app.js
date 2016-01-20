@@ -1,84 +1,63 @@
 var stationView;
-var stationArray = [];
-var markerTest = [];
-//var filterItem;
-
-
-//	$('.typeahead').bind('typeahead:select', function(ev, suggestion) {
-//			filterItem = suggestion;
-//			console.log(suggestion);
-//		});
 
 
 var ViewModel = function() {
 	var self = this;
-	self.stationList = ko.observableArray([]);
-	this.currentStation = ko.observable(this.stationList()[0]);
+	this.stationList = ko.observableArray([]);
+	this.currentStation = ko.observable(this.stationList[0]);
+	this.filterText = ko.observable("");
 
+	// filter function
+	this.filteredItems = ko.computed(function() {
+		var filter = self.filterText().toLowerCase();
+		if (!filter) {
+			return self.stationList();
+		} else {
+			return ko.utils.arrayFilter(self.stationList(), function(station) {
+				var st = station.name.toLowerCase();
+				if (st.search(filter) >= 0) {
+					console.log(this.station.isVisible(true));
+//					this.station.marker.visible = true;
+				} else {
+					console.log(this.station.isVisible(false));
+//					this.station.marker.visible = false;
+				}
+			});
+		}
+	}, ViewModel);
 
 	this.setStation = function(clickedStation) {
 		self.currentStation(clickedStation);
 	};
+// flickr API function
+	this.flickrData = function() {
+		//test array to hold Flickr data
+		var flickrArray = [];
+		var APIKey = 'f4de1a10820c31e94afa5dd9c2386445';
+		var flickrAPI = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=f4de1a10820c31e94afa5dd9c2386445&text=' +
+// 		this.stationList() ????		
+		+'&format=json&nojsoncallback=1&auth_token=72157663152403780-89cebc8ed31b78d8&api_sig=2c8b13fafd6ef7f7e07b5493075277fd';
+		$.getJSON(flickrAPI).success(
+			function(data) {
+
+
+				console.log(data);
+
+			}).fail(
+			function(e) {
+				console.log('Failure To Receive Data', e);
+			});
+
+		console.log('Request Sent');
+	};
+
 };
-
-
-
-
+//call viewmodel
 ViewModel();
+// new viewmodel in the global scope
 stationView = new ViewModel;
 
 // wait for DOM to load.
 document.addEventListener("DOMContentLoaded", function(event) {
 	ko.applyBindings(stationView);
 });
-
-
-//trying to put the visibility and filter functions/observables in the stationView space (global)
-var thisLocation = stationView.stationList;
-stationView.isVisible = ko.observable(true);
-stationView.filterText = ko.observable("");
-stationView.filteredItems = ko.computed(function() {
-	var filter = stationView.filterText().toLowerCase();
-	if (!filter) {
-		return stationView.stationList();
-	} else {
-		return ko.utils.arrayFilter(stationView.stationList(), function(station) {
-			var st = station.name.toLowerCase();
-			if (st.search(filter) >= 0) {
-//				this.isVisible(true);
-//				this.marker.visible = true;
-			} else {
-//				this.isVisible(false);
-//				this.marker.visible = false;
-			}
-		});
-	}
-}, ViewModel);
-
-//
-//
-//	FLICKR API START
-//
-//
-
-
-
-var flickrData = function() {
-	var flickrAPI = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=935807b47b54803dfdbf505814f780de&text='+ this.stationList. +'&format=json&nojsoncallback=1&auth_token=72157663471240722-6ace5f62ac8e56b6&api_sig=40abb51ebfa85eff62bbf0fafd427d68';
-	$.getJSON(flickrAPI).success(
-		function(data) {
-			console.log('yessss');
-			console.log("TODO: locations name in flickr API call");
-			console.log("TODO: take results (farmid, secret, etc.) and put it in infowindow URL for image");
-			console.log("TODO: fix filter (scoping issue?)");
-			console.log(data);
-		}).fail(
-		function(e) {
-			console.log('nooooo...%o', e);
-		});
-
-	console.log('sent');
-};
-
-flickrData();
-
