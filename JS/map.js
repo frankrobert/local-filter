@@ -90,6 +90,7 @@ function addMarker(place) {
 				return;
 			}
 			infoWindow.setContent(result.name, result.viscinity);
+			flickrAPI(place.name);
 			//  "https://farm" + {farm-id} + ".staticflickr.com/" + {server-id} + "/" + {id} + "_" + {secret} + "_m.jpg"
 			infoWindow.open(map, marker);
 			console.log("Position: " + marker.getPosition());

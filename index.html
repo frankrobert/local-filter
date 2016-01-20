@@ -27,8 +27,8 @@
 						</form>
 					</span>
 				</div>
-				<ul id="locations" data-bind="foreach: filteredItems">
-					<li data-bind="text: name, click: setStation"><!-- , visible: isVisible -->
+				<ul id="locations" data-bind="foreach: stationList">
+					<li data-bind="text: name, click: setStation, visible: isVisible">
 					</li>
 				</ul>
 			</div>
