@@ -56,7 +56,7 @@ function callback(results, status, pagination) {
 	results.forEach(function(result) {
 		// if the word 'station' is included for more precise results.
 		if (result.name.toLowerCase().indexOf('station') === 0) {
-			var marker = addMarker(result);
+//			var marker = addMarker(result);
 			// push the marker data to the results
 			result.marker = addMarker(result);
 			// create a property for my stationList to keep track of whether it is visible

@@ -16,19 +16,13 @@
 					<br>
 					<span>
 						<form>
-							<!--
-							<input class="typeahead form-control" type="text" placeholder="Type in a Station Name" autofocus>
-							-->
 							<input type="text" class="form-control" placeholder="Find your station..." data-bind="textInput: stationView.filterText" autofocus>
-							
-							<!--
-							<button type="submit" class="filter-btn">Filter</button>
-							-->
+							<button data-bind="click: reset" type="reset" class="filter-btn">Reset Filter</button>
 						</form>
 					</span>
 				</div>
 				<ul id="locations" data-bind="foreach: stationList">
-					<li data-bind="text: name, click: setStation, visible: isVisible">
+					<li data-bind="text: name, click: $parent.setStation, visible: isVisible">
 					</li>
 				</ul>
 			</div>

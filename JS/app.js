@@ -4,7 +4,7 @@ var stationView;
 var ViewModel = function() {
 	var self = this;
 	this.stationList = ko.observableArray([]);
-	this.currentStation = ko.observable(this.stationList[0]);
+	this.currentStation = ko.observable(self.stationList()[0]);
 	this.filterText = ko.observable("");
 
 	// filter function
@@ -35,9 +35,17 @@ var ViewModel = function() {
 		}
 	}, ViewModel);
 
+	// when button is clicked, sets all stationList() items to isVisible(true);
+	this.reset = function(){
+		self.stationList().forEach(function(station){
+			station.isVisible(true);
+			station.marker.setVisible(true);
+		});
+	};
 	// use this...?
 	this.setStation = function(clickedStation) {
 		self.currentStation(clickedStation);
+		self.filterText(clickedStation.name);
 	};
 // flickr API function
 	this.flickrData = function(stationName) {
@@ -71,3 +79,5 @@ stationView = new ViewModel;
 document.addEventListener("DOMContentLoaded", function(event) {
 	ko.applyBindings(stationView);
 });
+
+$('form').submit(false);
