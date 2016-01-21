@@ -79,7 +79,7 @@ function addMarker(place) {
 		icon: {
 			url: 'underground.png',
 			anchor: new google.maps.Point(10, 10),
-			scaledSize: new google.maps.Size(15, 22)
+			scaledSize: new google.maps.Size(24, 31)
 		}
 	});
 
@@ -89,11 +89,11 @@ function addMarker(place) {
 				console.error(status);
 				return;
 			}
+//	get FLICKR data on marker click --> switch to oauth
+//			flickrData(place.name);
 			infoWindow.setContent(result.name, result.viscinity);
-			flickrAPI(place.name);
 			//  "https://farm" + {farm-id} + ".staticflickr.com/" + {server-id} + "/" + {id} + "_" + {secret} + "_m.jpg"
 			infoWindow.open(map, marker);
-			console.log("Position: " + marker.getPosition());
 			//			marker.setVisible(false);									// use this method to make them disappear during filter ONCE you have the click binding working.
 		});
 	});
