@@ -41,6 +41,7 @@ var ViewModel = function() {
 		});
 		self.filterText("");
 		infoWindow.close();
+		infoWindow.setContent(null);
 	};
 	// use this to set the current station based on click
 	this.setStation = function(clickedStation) {
@@ -74,7 +75,7 @@ var ViewModel = function() {
 	this.getContent = function(station, url){
 		var infoContent;
 
-		infoContent = '<div><h2><b>' + station.name + '</b></h2><img src='+url+'></div>';
+		infoContent = '<div id="iw-container"><h2 class="iw-title"><b>' + station.name + '</b></h2><img class="iw-img" src='+url+'></div>';
 
 		return infoContent;
 	};

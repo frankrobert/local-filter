@@ -22,6 +22,7 @@ var initMap = function() {
 	// event listener to close any open infowindows on map click
 	map.addListener('click', function(event) {
 		infoWindow.close();
+		infoWindow.setContent(null);
 		stationView.reset();
 		map.panTo(mapCenter);
 	});
@@ -93,7 +94,11 @@ function addMarker(place) {
 				return;
 			}
 			stationView.flickrData(result);
+
+			setTimeout(function() {
 			infoWindow.setContent(stationView.getContent(result, stationView.flickrHTML()));
+			}, 800);
+
 			infoWindow.open(map, marker);
 			map.panTo(marker.getPosition());
 
