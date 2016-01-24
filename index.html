@@ -5,22 +5,21 @@
 		<meta name="viewport" content="initial-scale=1.0">
 		<meta charset="utf-8">
 		<link href="CSS/styles.css" rel="stylesheet">
-		<link href="CSS/typeahead.css" rel="stylesheet">
 		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="CSS/slimbox2.css" type="text/css">
 	</head>
 	<body>
 		<div class="container">
-			<div class="filter-bar">
-				<div class="nav-bar">
+		<div class="nav-bar">
 					<span class="salesman">STM Metro System</span>
 					<br>
-					<span>
 						<form>
 							<input type="text" class="form-control" placeholder="Find your station..." data-bind="textInput: stationView.filterText" autofocus>
 							<button data-bind="click: reset" type="reset" class="filter-btn">Reset Filter</button>
+							<a id="nav-toggle" href='#'><span></span></a>
 						</form>
-					</span>
 				</div>
+			<div class="filter-bar">
 				<ul id="locations" data-bind="foreach: stationList">
 					<li data-bind="text: name, click: $parent.setStation, visible: isVisible">
 					</li>
@@ -31,6 +30,7 @@
 		<script src="JS/knockout.js"></script>
 		<script src="bower_components/jquery-2.1.4.min/index.js"></script>
 		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="JS/slimbox2.js"></script>
 		<script src="JS/app.js"></script>
 		<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCjjXXr2R7GjWAsmbalUcvwd5I0tqLNuig&libraries=places&callback=initMap'></script>
 		<script src="JS/map.js"></script>

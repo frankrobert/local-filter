@@ -2,6 +2,7 @@ var map;
 var geocoder;
 var infowindow;
 var service;
+var marker;
 
 var initMap = function() {
 	var mapCenter = {
@@ -21,6 +22,8 @@ var initMap = function() {
 	// event listener to close any open infowindows on map click
 	map.addListener('click', function(event) {
 		infoWindow.close();
+		stationView.reset();
+		map.panTo(mapCenter);
 	});
 
 	// styling options for map
@@ -56,7 +59,6 @@ function callback(results, status, pagination) {
 	results.forEach(function(result) {
 		// if the word 'station' is included for more precise results.
 		if (result.name.toLowerCase().indexOf('station') === 0) {
-//			var marker = addMarker(result);
 			// push the marker data to the results
 			result.marker = addMarker(result);
 			// create a property for my stationList to keep track of whether it is visible
@@ -80,22 +82,31 @@ function addMarker(place) {
 			url: 'underground.png',
 			anchor: new google.maps.Point(10, 10),
 			scaledSize: new google.maps.Size(24, 31)
-		}
+		},
+		flickr: flickrData(place)
 	});
 
-	google.maps.event.addListener(marker, 'click', function() {
+	google.maps.event.addListener(marker, 'click', function(i) {
 		service.getDetails(place, function(result, status) {
 			if (status !== google.maps.places.PlacesServiceStatus.OK) {
 				console.error(status);
 				return;
 			}
-//	get FLICKR data on marker click --> switch to oauth
-//			flickrData(place.name);
-			infoWindow.setContent(result.name, result.viscinity);
-			//  "https://farm" + {farm-id} + ".staticflickr.com/" + {server-id} + "/" + {id} + "_" + {secret} + "_m.jpg"
+			infoWindow.setContent(result.name);
 			infoWindow.open(map, marker);
-			//			marker.setVisible(false);									// use this method to make them disappear during filter ONCE you have the click binding working.
+			map.panTo(marker.getPosition());
+
+			marker.setAnimation(google.maps.Animation.BOUNCE);
+			setTimeout(function() {
+				marker.setAnimation(null);
+			}, 3000);
+
+			stationView.setStation(result);
 		});
+	});
+
+	map.addListener('click', function(event) {
+		marker.setAnimation(null);
 	});
 	return marker;
 }

@@ -1,11 +1,11 @@
 var stationView;
 
-
 var ViewModel = function() {
 	var self = this;
 	this.stationList = ko.observableArray([]);
 	this.currentStation = ko.observable(self.stationList()[0]);
 	this.filterText = ko.observable("");
+	//	this.flickrHTML = ko.observable("");
 
 	// filter function
 	this.filteredItems = ko.computed(function() {
@@ -18,7 +18,6 @@ var ViewModel = function() {
 			});
 			return self.stationList();
 		} else {
-			//			return ko.utils.arrayFilter(self.stationList(), function(station) {
 			self.stationList().forEach(function(station) {
 				var st = station.name.toLowerCase();
 				if (st.search(filter) >= 0) {
@@ -41,37 +40,33 @@ var ViewModel = function() {
 			station.marker.setVisible(true);
 		});
 		self.filterText("");
+		infoWindow.close();
 	};
-	// use this...?
+	// use this to set the current station based on click
 	this.setStation = function(clickedStation) {
 		self.currentStation(clickedStation);
 		self.filterText(clickedStation.name);
-//		
-//		OPEN INFO WINDOW ON CLICK
-// 		
-//		self.currentStation().addEventListener('click', function() {
-//			infowindow.open(map, marker);
-//		});
+		//		OPEN INFO WINDOW ON CLICK
+		google.maps.event.trigger(clickedStation.marker, 'click');
+		infoWindow.open();
+		//		flickrData(clickedStation);
 	};
+
 	// flickr API function
 	this.flickrData = function(stationName) {
-		//test array to hold Flickr data
-		var flickrArray = [];
-		var APIKey = 'f4de1a10820c31e94afa5dd9c2386445';
-		var flickrAPI = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=f4de1a10820c31e94afa5dd9c2386445&text=' +
-			stationName + '&format=json&nojsoncallback=1&auth_token=72157663152403780-89cebc8ed31b78d8&api_sig=2c8b13fafd6ef7f7e07b5493075277fd';
+		var APIKey = 'eeed331e9b23f0d61bcc98f32725ce60';
+		var flickrAPI = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + APIKey + '&text=' + stationName.name + '&format=json&nojsoncallback=1';
 		$.getJSON(flickrAPI).success(
 			function(data) {
 
-
-				console.log(data);
+				var photoURL = '<div><h2><b>' + stationName.name + '</b></h2><img src="https://farm' + data.photos.photo[0].farm + '.staticflickr.com/' + data.photos.photo[0].server + '/' + data.photos.photo[0].id + '_' + data.photos.photo[0].secret + '_m.jpg"></div>';
+				return photoURL;
+//				flickrHTML(photoURL);
 
 			}).fail(
 			function(e) {
 				console.log('Failure To Receive Data', e);
 			});
-
-		console.log('Request Sent');
 	};
 
 };
@@ -85,4 +80,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	ko.applyBindings(stationView);
 });
 
+// remove refresh from form (pressing 'enter' / button)
 $('form').submit(false);
+
+/*
+Flickr data won't push to all separate stations.
+
+currentStation only pushed AFTER initial click.
+
+currentStation does NOT take marker data or flickr data.
+
+*/

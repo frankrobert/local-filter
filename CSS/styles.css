@@ -18,32 +18,34 @@ html,
 {
     display: inline-block;
     float: left;
+    overflow: auto;
 
-    width: 25%;
+    width: auto;
     height: 100%;
 
     border-width: 0 3px 0 0;
     border-style: solid;
     border-color: white;
     background-color: #021f32;
-
-    overflow: auto;
 }
 .nav-bar
 {
-	position: fixed;
+    position: fixed;
+    z-index: 1;
+
+    display: block;
+
+    width: 100%;
+
     border-width: 0 0 3px 0;
     border-style: solid;
     border-color: white;
     background-color: #021f32;
-    z-index: 1;
-    width: auto;
-    display: block;
 }
 li
 {
-
     transition: all .20s ease-in-out;
+
     color: white;
 }
 li:hover
@@ -61,43 +63,56 @@ li:hover
     color: white;
 }
 
-/*
-input
-{
-    margin: 5px 1px 3px 0;
-    padding: 3px 0 3px 3px;
-
-    transition: all .30s ease-in-out;
-
-    border: 1px solid #ddd;
-    outline: none;
-}
-input:focus,
-input:hover
-{
-    margin: 5px 1px 3px 0;
-    padding: 3px 0 3px 3px;
-
-    border: 1px solid rgba(81, 203, 238, 1);
-    box-shadow: 0 0 7px rgba(81, 203, 238, 1);
-}
-input,
-select,
-textarea
-{
-    color: #f00;
-}
-*/
-
 .green
 {
     background-color: green;
 }
-#locations{
-
-	list-style-type: none;	
+#locations
+{
     font-family: 'Montserrat';
-	top: 60px;
-	position: relative;
-	display: block;
+
+    position: relative;
+    top: 60px;
+
+    display: block;
+
+    list-style-type: none;
+}
+
+/* HAMBURGER ICON STYLING FROM WEB Credits to Elijah Manor for this */
+
+#nav-toggle { position: absolute; left: 50%; top: 50%; }
+
+#nav-toggle { cursor: pointer; padding: 10px 35px 16px 0px; }
+#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
+  cursor: pointer;
+  border-radius: 1px;
+  height: 5px;
+  width: 35px;
+  background: white;
+  position: absolute;
+  display: block;
+  content: '';
+}
+#nav-toggle span:before {
+  top: -10px; 
+}
+#nav-toggle span:after {
+  bottom: -10px;
+}
+
+#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
+  transition: all 500ms ease-in-out;
+}
+#nav-toggle.active span {
+  background-color: transparent;
+}
+#nav-toggle.active span:before, #nav-toggle.active span:after {
+  top: 0;
+}
+#nav-toggle.active span:before {
+  transform: rotate(45deg);
+}
+#nav-toggle.active span:after {
+  transform: rotate(-45deg);
 }
