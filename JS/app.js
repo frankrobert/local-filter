@@ -5,7 +5,7 @@ var ViewModel = function() {
 	this.stationList = ko.observableArray([]);
 	this.currentStation = ko.observable(self.stationList()[0]);
 	this.filterText = ko.observable("");
-	//	this.flickrHTML = ko.observable("");
+	this.flickrHTML = ko.observable();
 
 	// filter function
 	this.filteredItems = ko.computed(function() {
@@ -59,9 +59,10 @@ var ViewModel = function() {
 		$.getJSON(flickrAPI).success(
 			function(data) {
 
-				var photoURL = '<div><h2><b>' + stationName.name + '</b></h2><img src="https://farm' + data.photos.photo[0].farm + '.staticflickr.com/' + data.photos.photo[0].server + '/' + data.photos.photo[0].id + '_' + data.photos.photo[0].secret + '_m.jpg"></div>';
+				var photoURL = 'https://farm' + data.photos.photo[0].farm + '.staticflickr.com/' + data.photos.photo[0].server + '/' + data.photos.photo[0].id + '_' + data.photos.photo[0].secret + '_m.jpg';	
+				self.flickrHTML(photoURL);
+				console.log(photoURL);
 				return photoURL;
-//				flickrHTML(photoURL);
 
 			}).fail(
 			function(e) {
@@ -69,11 +70,19 @@ var ViewModel = function() {
 			});
 	};
 
+	// to use for the flickrAPI and the infowindow
+	this.getContent = function(station, url){
+		var infoContent;
+
+		infoContent = '<div><h2><b>' + station.name + '</b></h2><img src='+url+'></div>';
+
+		return infoContent;
+	};
+
 };
-//call viewmodel
-ViewModel();
+
 // new viewmodel in the global scope
-stationView = new ViewModel;
+stationView = new ViewModel();
 
 // wait for DOM to load.
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -82,12 +91,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 // remove refresh from form (pressing 'enter' / button)
 $('form').submit(false);
-
-/*
-Flickr data won't push to all separate stations.
-
-currentStation only pushed AFTER initial click.
-
-currentStation does NOT take marker data or flickr data.
-
-*/

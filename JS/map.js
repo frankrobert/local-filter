@@ -83,7 +83,7 @@ function addMarker(place) {
 			anchor: new google.maps.Point(10, 10),
 			scaledSize: new google.maps.Size(24, 31)
 		},
-		flickr: flickrData(place)
+
 	});
 
 	google.maps.event.addListener(marker, 'click', function(i) {
@@ -92,7 +92,8 @@ function addMarker(place) {
 				console.error(status);
 				return;
 			}
-			infoWindow.setContent(result.name);
+			stationView.flickrData(result);
+			infoWindow.setContent(stationView.getContent(result, stationView.flickrHTML()));
 			infoWindow.open(map, marker);
 			map.panTo(marker.getPosition());
 
