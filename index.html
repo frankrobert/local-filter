@@ -9,15 +9,16 @@
 	</head>
 	<body>
 		<div class="container">
-		<div class="nav-bar">
-					<span class="salesman">STM Metro System</span>
-					<br>
-						<form>
-							<input type="text" class="form-control" placeholder="Find your station..." data-bind="textInput: stationView.filterText" autofocus>
-							<button data-bind="click: reset" type="reset" class="filter-btn">Reset Filter</button>
-						<!--	<a id="nav-toggle" href='#'><span></span></a>	-->
-						</form>
-				</div>
+			<div class="nav-bar">
+				<span class="salesman">STM Metro System</span>
+				<br>
+				<form>
+					<input type="text" class="form-control" placeholder="Find your station..." data-bind="textInput: stationView.filterText" autofocus>
+					<button data-bind="click: reset" type="reset" class="filter-btn">Reset Filter</button>
+					<button id="slide-btn" type="button">☰</button>
+					<!--	<a id="nav-toggle" href='#'><span></span></a>	-->
+				</form>
+			</div>
 			<div class="filter-bar">
 				<ul id="locations" data-bind="foreach: stationList">
 					<li data-bind="text: name, click: $parent.setStation, visible: isVisible">

@@ -42,6 +42,7 @@ var ViewModel = function() {
 		self.filterText("");
 		infoWindow.close();
 		infoWindow.setContent(null);
+		$('.filter-bar').removeClass('toggled');
 	};
 	// use this to set the current station based on click
 	this.setStation = function(clickedStation) {
@@ -60,7 +61,7 @@ var ViewModel = function() {
 		$.getJSON(flickrAPI).success(
 			function(data) {
 
-				var photoURL = 'https://farm' + data.photos.photo[0].farm + '.staticflickr.com/' + data.photos.photo[0].server + '/' + data.photos.photo[0].id + '_' + data.photos.photo[0].secret + '_m.jpg';	
+				var photoURL = 'https://farm' + data.photos.photo[0].farm + '.staticflickr.com/' + data.photos.photo[0].server + '/' + data.photos.photo[0].id + '_' + data.photos.photo[0].secret + '_m.jpg';
 				self.flickrHTML(photoURL);
 				console.log(photoURL);
 				return photoURL;
@@ -72,10 +73,10 @@ var ViewModel = function() {
 	};
 
 	// to use for the flickrAPI and the infowindow
-	this.getContent = function(station, url){
+	this.getContent = function(station, url) {
 		var infoContent;
 
-		infoContent = '<div id="iw-container"><h2 class="iw-title"><b>' + station.name + '</b></h2><img class="iw-img" src='+url+'></div>';
+		infoContent = '<div id="iw-container"><h2 class="iw-title"><b>' + station.name + '</b></h2><img class="iw-img" src=' + url + '></div>';
 
 		return infoContent;
 	};
@@ -86,9 +87,20 @@ var ViewModel = function() {
 stationView = new ViewModel();
 
 // wait for DOM to load.
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener('DOMContentLoaded', function(event) {
 	ko.applyBindings(stationView);
-});
 
 // remove refresh from form (pressing 'enter' / button)
 $('form').submit(false);
+
+// Menu Toggle Script from Andreas! :)
+$('#slide-btn').click(function(e) {
+	e.preventDefault();
+	$('.filter-bar').toggleClass('toggled');
+});
+
+// set the filter-bar to the nav-bar's width
+var pos = $('.nav-bar').width();
+$('.filter-bar').css('width', pos);
+
+});

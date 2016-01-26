@@ -41,7 +41,9 @@ var initMap = function() {
 
 
 	// infowindow for markers
-	infoWindow = new google.maps.InfoWindow();
+	infoWindow = new google.maps.InfoWindow({
+		maxWidth: 300 
+	});
 
 	// places library call to start service
 	service = new google.maps.places.PlacesService(map);

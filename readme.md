@@ -30,18 +30,10 @@ How-To
 ----------
 
 
-To-Do
+Author Notes
 -------------
 
-This project is still a work-in-progress. As it stands, it is fully functional, save for a few elements that need to be worked on:
-
- - Flickr API call needs to change from authentication tokens to OAuth.
- - Clicking a list item should filter the list and markers *and* open the infowindow.
- - Clicking the marker on the map should filter the list as well.
- - When the infowindow opens, it should display flickr images according to the station name.
- - There should be error handling for the API calls.
- - Add a load / wait-time for the initial 6s it takes for the map to finish placing its pins.
- - Add animation on click.
+This project is still a work-in-progress. As it stands, it is fully functional, save for a few elements that need to be worked on.
 
 Special thanks to:
 John, Ben, Alex, Abigail, Sarah.

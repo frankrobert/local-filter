@@ -6,35 +6,42 @@ html,
     margin: 0;
     padding: 0;
 }
-.container
-{
-    align-items: stretch;
-}
+
 #map
 {
+    position: fixed;
+
+    width: auto;
     height: 100%;
 }
 .filter-bar
 {
+    z-index: 10;
+
     display: inline-block;
     float: left;
     overflow: auto;
 
-    width: 20%;
     height: 100%;
+
+    transition: all .30s ease-in-out;
 
     border-width: 0 3px 0 0;
     border-style: solid;
     border-color: white;
     background-color: #021f32;
 }
+.filter-bar.toggled
+{
+    margin-left: -350px;
+}
+
 .nav-bar
 {
     position: fixed;
     z-index: 1;
 
     display: block;
-
 
     border-width: 0 0 3px 0;
     border-style: solid;
@@ -50,6 +57,7 @@ li
 li:hover
 {
     color: red;
+    background: rgba(255, 255, 255, .2);
 }
 .salesman
 {
@@ -78,83 +86,12 @@ li:hover
     list-style-type: none;
 }
 
-/* HAMBURGER ICON STYLING FROM WEB Credits to Elijah Manor for this */
-
-
-/*
-#nav-toggle
-{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-}
-
-#nav-toggle
-{
-    padding: 10px 35px 16px 0;
-
-    cursor: pointer;
-}
-#nav-toggle span,
-#nav-toggle span:before,
-#nav-toggle span:after
-{
-    position: absolute;
-
-    display: block;
-
-    width: 35px;
-    height: 5px;
-
-    content: '';
-    cursor: pointer;
-
-    border-radius: 1px;
-    background: white;
-}
-#nav-toggle span:before
-{
-    top: -10px;
-}
-#nav-toggle span:after
-{
-    bottom: -10px;
-}
-
-#nav-toggle span,
-#nav-toggle span:before,
-#nav-toggle span:after
-{
-    transition: all 500ms ease-in-out;
-}
-#nav-toggle.active span
-{
-    background-color: transparent;
-}
-#nav-toggle.active span:before,
-#nav-toggle.active span:after
-{
-    top: 0;
-}
-#nav-toggle.active span:before
-{
-    transform: rotate(45deg);
-}
-#nav-toggle.active span:after
-{
-    transform: rotate(-45deg);
-}
-
-/*
-
 /* INFOWINDOW STYLING */
 .gm-style-iw
 {
     top: 0 !important;
     left: 0 !important;
-
-    width: 350px !important;
-
+    width: auto;
     border-radius: 2px 2px 0 0;
 }
 
