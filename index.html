@@ -16,7 +16,6 @@
 					<input type="text" class="form-control" placeholder="Find your station..." data-bind="textInput: stationView.filterText" autofocus>
 					<button data-bind="click: reset" type="reset" class="filter-btn">Reset Filter</button>
 					<button id="slide-btn" type="button">☰</button>
-					<!--	<a id="nav-toggle" href='#'><span></span></a>	-->
 				</form>
 			</div>
 			<div class="filter-bar">
@@ -32,6 +31,16 @@
 		<script src="bower_components/jquery/dist/jquery.js"></script>
 		<script src="JS/app.js"></script>
 		<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCjjXXr2R7GjWAsmbalUcvwd5I0tqLNuig&libraries=places&callback=initMap'></script>
+		<script>
+		(function(){if(!window.google || !window.google.maps){
+			$('map').html('<h1>Google Maps Could Not Be Loaded</h1>');
+		}
+		else
+		{
+			return window.google || window.google.maps;
+		}
+	})();
+		</script>
 		<script src="JS/map.js"></script>
 		<script src="JS/mapstyle.js"></script>
 	</body>

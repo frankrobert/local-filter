@@ -1,23 +1,42 @@
-var map;
-var geocoder;
-var infowindow;
-var service;
-var marker;
+var map,
+geocoder,
+infowindow,
+service,
+marker,
+bounds;
+
 
 var initMap = function() {
 	var mapCenter = {
-		lat: 45.501689,
-		lng: -73.56725
+		lat: 45.508475,
+		lng: -73.624835
 	};
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: mapCenter,
-		zoom: 13,
+		zoom: 12,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		disableDefaultUI: true
 	});
 
+	bounds = new google.maps.LatLngBounds();
+
 	// adding geocoding to turn lat+long into address
 	geocoder = new google.maps.Geocoder();
+
+	// creating new Y offset method
+	google.maps.Map.prototype.panToWithOffset = function(latlng, offsetY) {
+		var map = this;
+		var ov = new google.maps.OverlayView();
+		ov.onAdd = function() {
+			var proj = this.getProjection();
+			var aPoint = proj.fromLatLngToContainerPixel(latlng);
+			aPoint.y = aPoint.y + offsetY;
+			map.panTo(proj.fromContainerPixelToLatLng(aPoint));
+		};
+		ov.draw = function() {};
+		ov.setMap(this);
+	};
+
 
 	// event listener to close any open infowindows on map click
 	map.addListener('click', function(event) {
@@ -42,7 +61,7 @@ var initMap = function() {
 
 	// infowindow for markers
 	infoWindow = new google.maps.InfoWindow({
-		maxWidth: 300 
+		maxWidth: 300
 	});
 
 	// places library call to start service
@@ -52,7 +71,6 @@ var initMap = function() {
 	service.nearbySearch(request, callback);
 };
 
-//async.series([
 //callback returning the values of the nearbySearch
 function callback(results, status, pagination) {
 	if (status !== google.maps.places.PlacesServiceStatus.OK) {
@@ -98,23 +116,26 @@ function addMarker(place) {
 			stationView.flickrData(result);
 
 			setTimeout(function() {
-			infoWindow.setContent(stationView.getContent(result, stationView.flickrHTML()));
+				infoWindow.setContent(stationView.getContent(result, stationView.flickrHTML()));
 			}, 800);
 
 			infoWindow.open(map, marker);
-			map.panTo(marker.getPosition());
+
+			map.panToWithOffset(marker.getPosition(), -200);
+			//			map.panTo(marker.getPosition());
 
 			marker.setAnimation(google.maps.Animation.BOUNCE);
 			setTimeout(function() {
 				marker.setAnimation(null);
 			}, 3000);
-
-			stationView.setStation(result);
+			$('.filter-bar').addClass('toggled');
 		});
 	});
 
 	map.addListener('click', function(event) {
 		marker.setAnimation(null);
 	});
+	bounds.extend(place.geometry.location);
+	map.fitBounds(bounds);
 	return marker;
 }

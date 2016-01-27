@@ -47,11 +47,10 @@ var ViewModel = function() {
 	// use this to set the current station based on click
 	this.setStation = function(clickedStation) {
 		self.currentStation(clickedStation);
-		self.filterText(clickedStation.name);
 		//		OPEN INFO WINDOW ON CLICK
 		google.maps.event.trigger(clickedStation.marker, 'click');
 		infoWindow.open();
-		//		flickrData(clickedStation);
+		$('.filter-bar').addClass('toggled');
 	};
 
 	// flickr API function
@@ -63,12 +62,13 @@ var ViewModel = function() {
 
 				var photoURL = 'https://farm' + data.photos.photo[0].farm + '.staticflickr.com/' + data.photos.photo[0].server + '/' + data.photos.photo[0].id + '_' + data.photos.photo[0].secret + '_m.jpg';
 				self.flickrHTML(photoURL);
-				console.log(photoURL);
+//				console.warn(photoURL);
 				return photoURL;
 
 			}).fail(
 			function(e) {
-				console.log('Failure To Receive Data', e);
+				console.warn('Failure To Receive Data');
+				infoWindow.setContent('Failure To Receive Data');
 			});
 	};
 
@@ -76,7 +76,7 @@ var ViewModel = function() {
 	this.getContent = function(station, url) {
 		var infoContent;
 
-		infoContent = '<div id="iw-container"><h2 class="iw-title"><b>' + station.name + '</b></h2><img class="iw-img" src=' + url + '></div>';
+		infoContent = '<div id="iw-container"><h2 class="iw-title"><b>' + station.name + '</b></h2><img class="iw-img" src=' + url + ' onError=this.src="metro.jpg" /></div>';
 
 		return infoContent;
 	};
@@ -90,17 +90,16 @@ stationView = new ViewModel();
 document.addEventListener('DOMContentLoaded', function(event) {
 	ko.applyBindings(stationView);
 
-// remove refresh from form (pressing 'enter' / button)
-$('form').submit(false);
+	// remove refresh from form (pressing 'enter' / button)
+	$('form').submit(false);
 
-// Menu Toggle Script from Andreas! :)
-$('#slide-btn').click(function(e) {
-	e.preventDefault();
-	$('.filter-bar').toggleClass('toggled');
-});
+	// Menu Toggle Script from Andreas! :)
+	$('#slide-btn').click(function(e) {
+		e.preventDefault();
+		$('.filter-bar').toggleClass('toggled');
+	});
 
-// set the filter-bar to the nav-bar's width
-var pos = $('.nav-bar').width();
-$('.filter-bar').css('width', pos);
-
+	// set the filter-bar to the nav-bar's width
+	var pos = $('.nav-bar').width();
+	$('.filter-bar').css('width', pos);
 });
