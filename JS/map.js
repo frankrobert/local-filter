@@ -1,9 +1,9 @@
 var map,
-geocoder,
-infowindow,
-service,
-marker,
-bounds;
+	geocoder,
+	infowindow,
+	service,
+	marker,
+	bounds;
 
 
 var initMap = function() {
@@ -128,7 +128,7 @@ function addMarker(place) {
 			setTimeout(function() {
 				marker.setAnimation(null);
 			}, 3000);
-			$('.filter-bar').addClass('toggled');
+			stationView.toggleValue(1);
 		});
 	});
 

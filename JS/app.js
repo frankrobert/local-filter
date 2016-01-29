@@ -6,6 +6,7 @@ var ViewModel = function() {
 	this.currentStation = ko.observable(self.stationList()[0]);
 	this.filterText = ko.observable("");
 	this.flickrHTML = ko.observable();
+	this.toggleValue = ko.observable();
 
 	// filter function
 	this.filteredItems = ko.computed(function() {
@@ -42,7 +43,7 @@ var ViewModel = function() {
 		self.filterText("");
 		infoWindow.close();
 		infoWindow.setContent(null);
-		$('.filter-bar').removeClass('toggled');
+		self.toggleValue(0);
 	};
 	// use this to set the current station based on click
 	this.setStation = function(clickedStation) {
@@ -50,7 +51,7 @@ var ViewModel = function() {
 		//		OPEN INFO WINDOW ON CLICK
 		google.maps.event.trigger(clickedStation.marker, 'click');
 		infoWindow.open();
-		$('.filter-bar').addClass('toggled');
+		self.toggleValue(1);
 	};
 
 	// flickr API function
@@ -62,7 +63,7 @@ var ViewModel = function() {
 
 				var photoURL = 'https://farm' + data.photos.photo[0].farm + '.staticflickr.com/' + data.photos.photo[0].server + '/' + data.photos.photo[0].id + '_' + data.photos.photo[0].secret + '_m.jpg';
 				self.flickrHTML(photoURL);
-//				console.warn(photoURL);
+				//				console.warn(photoURL);
 				return photoURL;
 
 			}).fail(
@@ -81,6 +82,15 @@ var ViewModel = function() {
 		return infoContent;
 	};
 
+	// use this for slide
+	this.slide = function() {
+
+		if (self.toggleValue() === 1) {
+			self.toggleValue(0);
+		} else {
+			self.toggleValue(1);
+		}
+	};
 };
 
 // new viewmodel in the global scope
@@ -92,12 +102,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
 	// remove refresh from form (pressing 'enter' / button)
 	$('form').submit(false);
-
-	// Menu Toggle Script from Andreas! :)
-	$('#slide-btn').click(function(e) {
-		e.preventDefault();
-		$('.filter-bar').toggleClass('toggled');
-	});
 
 	// set the filter-bar to the nav-bar's width
 	var pos = $('.nav-bar').width();

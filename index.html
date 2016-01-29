@@ -15,10 +15,10 @@
 				<form>
 					<input type="text" class="form-control" placeholder="Find your station..." data-bind="textInput: stationView.filterText" autofocus>
 					<button data-bind="click: reset" type="reset" class="filter-btn">Reset Filter</button>
-					<button id="slide-btn" type="button">☰</button>
+					<button data-bind="click: slide" id="slide-btn" type="button">☰</button>
 				</form>
 			</div>
-			<div class="filter-bar">
+			<div data-bind="css: {toggled: toggleValue() >= 1}" class="filter-bar">
 				<ul id="locations" data-bind="foreach: stationList">
 					<li data-bind="text: name, click: $parent.setStation, visible: isVisible">
 					</li>
@@ -30,6 +30,7 @@
 		<script src="bower_components/jquery-2.1.4.min/index.js"></script>
 		<script src="bower_components/jquery/dist/jquery.js"></script>
 		<script src="JS/app.js"></script>
+		<script src="JS/map.js"></script>
 		<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCjjXXr2R7GjWAsmbalUcvwd5I0tqLNuig&libraries=places&callback=initMap'></script>
 		<script>
 		(function(){if(!window.google || !window.google.maps){
@@ -41,7 +42,6 @@
 		}
 	})();
 		</script>
-		<script src="JS/map.js"></script>
 		<script src="JS/mapstyle.js"></script>
 	</body>
 </html>
