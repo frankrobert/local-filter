@@ -24,7 +24,7 @@
 					</li>
 				</ul>
 			</div>
-			<div id="map"></div>
+			<div id="map" data-bind="html: errorLog"></div>
 		</div>
 		<script src="JS/knockout.js"></script>
 		<script src="bower_components/jquery-2.1.4.min/index.js"></script>
@@ -32,16 +32,6 @@
 		<script src="JS/app.js"></script>
 		<script src="JS/map.js"></script>
 		<script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCjjXXr2R7GjWAsmbalUcvwd5I0tqLNuig&libraries=places&callback=initMap'></script>
-		<script>
-		(function(){if(!window.google || !window.google.maps){
-			$('map').html('<h1>Google Maps Could Not Be Loaded</h1>');
-		}
-		else
-		{
-			return window.google || window.google.maps;
-		}
-	})();
-		</script>
 		<script src="JS/mapstyle.js"></script>
 	</body>
 </html>

@@ -1,4 +1,5 @@
 var map,
+	mapCenter,
 	geocoder,
 	infowindow,
 	service,
@@ -7,7 +8,7 @@ var map,
 
 
 var initMap = function() {
-	var mapCenter = {
+	mapCenter = {
 		lat: 45.508475,
 		lng: -73.624835
 	};
@@ -113,21 +114,20 @@ function addMarker(place) {
 				console.error(status);
 				return;
 			}
+			map.panToWithOffset(marker.getPosition(), -200);
 			stationView.flickrData(result);
 
-			setTimeout(function() {
-				infoWindow.setContent(stationView.getContent(result, stationView.flickrHTML()));
-			}, 800);
+			//			setTimeout(function() {
+			//				infoWindow.setContent(stationView.getContent(result, stationView.flickrHTML()));
+			//			}, 800);
 
-			infoWindow.open(map, marker);
-
-			map.panToWithOffset(marker.getPosition(), -200);
+			//			infoWindow.open(map, marker);
 			//			map.panTo(marker.getPosition());
 
 			marker.setAnimation(google.maps.Animation.BOUNCE);
 			setTimeout(function() {
 				marker.setAnimation(null);
-			}, 3000);
+			}, 3500);
 			stationView.toggleValue(1);
 		});
 	});

@@ -7,6 +7,7 @@ var ViewModel = function() {
 	this.filterText = ko.observable("");
 	this.flickrHTML = ko.observable();
 	this.toggleValue = ko.observable();
+	this.errorLog = ko.observable();
 
 	// filter function
 	this.filteredItems = ko.computed(function() {
@@ -19,6 +20,7 @@ var ViewModel = function() {
 			});
 			return self.stationList();
 		} else {
+			infoWindow.close();
 			self.stationList().forEach(function(station) {
 				var st = station.name.toLowerCase();
 				if (st.search(filter) >= 0) {
@@ -58,16 +60,24 @@ var ViewModel = function() {
 	this.flickrData = function(stationName) {
 		var APIKey = 'eeed331e9b23f0d61bcc98f32725ce60';
 		var flickrAPI = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + APIKey + '&text=' + stationName.name + '&format=json&nojsoncallback=1';
-		$.getJSON(flickrAPI).success(
-			function(data) {
-
+		$.getJSON(flickrAPI, {
+				tags: "montreal",
+				tagmode: "any",
+				format: "json"
+			})
+			.done(function(data) {
 				var photoURL = 'https://farm' + data.photos.photo[0].farm + '.staticflickr.com/' + data.photos.photo[0].server + '/' + data.photos.photo[0].id + '_' + data.photos.photo[0].secret + '_m.jpg';
+				var pos = {
+					lat: stationName.geometry.location.lat(),
+					lng: stationName.geometry.location.lng()
+				};
 				self.flickrHTML(photoURL);
-				//				console.warn(photoURL);
+				infoWindow.setPosition(pos);
+				infoWindow.setContent(stationView.getContent(stationName, self.flickrHTML()));
+				infoWindow.open(map);
 				return photoURL;
-
-			}).fail(
-			function(e) {
+			})
+			.fail(function(e) {
 				console.warn('Failure To Receive Data');
 				infoWindow.setContent('Failure To Receive Data');
 			});
@@ -76,9 +86,13 @@ var ViewModel = function() {
 	// to use for the flickrAPI and the infowindow
 	this.getContent = function(station, url) {
 		var infoContent;
+		var errors = function(){
+			document.getElementById("iw-container").innerHTML("<h1><strong>Failure To Receive Data</strong></h1>");
+		};
 
-		infoContent = '<div id="iw-container"><h2 class="iw-title"><b>' + station.name + '</b></h2><img class="iw-img" src=' + url + ' onError=this.src="metro.jpg" /></div>';
-
+		infoContent = '<div id="iw-container"><h2 class="iw-title"><strong>' + station.name + '</strong></h2><img class="iw-img" src=' + url + '  onerror="errors()"></div>';
+		//			' onerror="document.getElementById("iw-container").innerHTML("<strong>Failure To Receive Data</strong>")"
+// onerror=this.src="metro.jpg"
 		return infoContent;
 	};
 
@@ -91,6 +105,13 @@ var ViewModel = function() {
 			self.toggleValue(1);
 		}
 	};
+	this.errorHandle = (function() {
+		if (!window.google || !window.google.maps) {
+			self.errorLog("<center><h1><b>Map Could Not Be Loaded!</b></h1></center>");
+		} else {
+			return window.google || window.google.maps;
+		}
+	})();
 };
 
 // new viewmodel in the global scope
