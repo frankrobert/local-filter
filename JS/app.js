@@ -79,7 +79,13 @@ var ViewModel = function() {
 			})
 			.fail(function(e) {
 				console.warn('Failure To Receive Data');
+				var pos = {
+					lat: stationName.geometry.location.lat(),
+					lng: stationName.geometry.location.lng()
+				};
+				infoWindow.setPosition(pos);
 				infoWindow.setContent('Failure To Receive Data');
+				infoWindow.open(map);
 			});
 	};
 
