@@ -1,0 +1,111 @@
+body,
+html,
+.container
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#map
+{
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+}
+.filter-bar
+{
+
+    z-index: 10;
+    display: inline-block;
+    float: left;
+    overflow: auto;
+    position: absolute;
+
+    height: 100%;
+
+    transition: all .30s ease-in-out;
+
+    border-width: 0 3px 0 0;
+    border-style: solid;
+    border-color: white;
+    background-color: #021f32;
+}
+.filter-bar.toggled
+{
+    margin-left: -350px;
+}
+
+.nav-bar
+{
+    position: fixed;
+    z-index: 11;
+
+    display: block;
+
+    border-width: 0 0 3px 0;
+    border-style: solid;
+    border-color: white;
+    background-color: #021f32;
+}
+li
+{
+    transition: all .20s ease-in-out;
+
+    color: white;
+}
+li:hover
+{
+    color: red;
+    background: rgba(255, 255, 255, .2);
+}
+.salesman
+{
+    font-family: 'Montserrat';
+    font-size: 20px;
+    font-weight: bold;
+
+    margin-left: auto;
+
+    color: white;
+}
+
+.green
+{
+    background-color: green;
+}
+#locations
+{
+    font-family: 'Montserrat';
+
+    position: relative;
+    top: 60px;
+
+    display: block;
+
+    list-style-type: none;
+}
+
+/* INFOWINDOW STYLING */
+.gm-style-iw
+{
+    top: 0 !important;
+    left: 0 !important;
+    width: auto;
+    border-radius: 2px 2px 0 0;
+}
+
+#iw-container  .iw-title
+{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+
+    margin: 1px;
+    padding: 10px;
+
+    color: white;
+    border-radius: 2px 2px 0 0; /* In accordance with the rounding of the default infowindow corners. */
+    background-color: #48b5e9;
+}
